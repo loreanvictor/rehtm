@@ -1,4 +1,4 @@
-export type SmartSlot = {
+type SmartSlot = {
   node: Node
   attribute?: string
   address?: number[]
@@ -13,10 +13,6 @@ export class SmartTemplate {
     this.template = document.createElement('template')
   }
 
-  get closed() {
-    return this.#closed
-  }
-
   slot(index: number, node: Node, attribute?: string) {
     if (!this.#closed) {
       this.slots[index] = { node, attribute }
@@ -29,7 +25,7 @@ export class SmartTemplate {
       if (!slot.address) {
         slot.address = []
         let node = slot.node
-        while (node && node.parentNode && node.parentNode !== this.template) {
+        while (node.parentNode) {
           const index = Array.from(node.parentNode.childNodes).indexOf(node as ChildNode)
           slot.address.unshift(index)
           node = node.parentNode
@@ -38,24 +34,22 @@ export class SmartTemplate {
     })
   }
 
-  render(target: Node, ...values: unknown[]) {
-    if (!this.#closed) {
-      this.finalize()
-    }
-
+  apply(target: Node, ...values: unknown[]) {
     Object.entries(this.slots).forEach(([index, slot]) => {
       const node = slot.address!.reduce((n, i) => n.childNodes[i]!, target)
       if (slot.attribute) {
+        // TODO: use processor
         (node as Element).setAttribute(slot.attribute, String(values[index]))
       } else {
+        // TODO: use processor
         node.textContent = String(values[index])
       }
     })
   }
 
-  use(...values: unknown[]) {
+  create(...values: unknown[]) {
     const target = document.importNode(this.template.content, true)
-    this.render(target, ...values)
+    this.apply(target, ...values)
 
     return target
   }

@@ -1,12 +1,21 @@
-import { SmartTemplate } from '../src'
+import { define } from 'minicomp'
+import { build } from '../src'
 
 
-const template = new SmartTemplate()
-template.template.innerHTML = '<div>Hellow <span><i></i>!</span></div>'
-const slot0 = template.template.content.querySelector('i')
-const slot1 = template.template.content.querySelector('span')
-template.slot(0, slot0)
-template.slot(1, slot1, 'style')
+const html = build()
 
-document.body.appendChild(template.use('World', 'color: red;'))
-document.body.appendChild(template.use('Jack', 'color: blue;'))
+const ogCreateElement = document.createElement
+document.createElement = (tagName, options) => {
+  if (tagName === 'template') {
+    console.log('NEW TEMPLATE')
+  }
+
+  return ogCreateElement.call(document, tagName, options)
+}
+
+define('say-hi', ({ to }) => html`<div>Hellow ${to}!</div>`)
+
+document.body.innerHTML = `
+  <say-hi to="World"></say-hi>
+  <say-hi to="Jack"></say-hi>
+`
