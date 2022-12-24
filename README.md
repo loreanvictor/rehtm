@@ -6,9 +6,11 @@ Create [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com
 ```js
 import { html } from 'rehtm'
 
-document.body.appendChild(
-  html`<div>Hellow World!</div>`
-)
+document.body.appendChild(html`
+  <div onclick=${() => console.log('HI!')}>
+    Hellow World!
+  </div>
+`)
 ```
 
 - Supports event listeners
