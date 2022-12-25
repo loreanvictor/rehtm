@@ -13,8 +13,7 @@ document.body.appendChild(html`
 `)
 ```
 
-- Supports event listeners
-- Supports object properties
-- Supports object attributes through processors
-- Supports object embedding in HTML through processors
-- Supports SSR and re-hydration when combined with [**minicomp**](https://github.com/loreanvictor/minicomp) (Experimental, via [declarative shadow DOM](https://github.com/mfreed7/declarative-shadow-dom))
+- Template caching
+- SSR and re-hydration
+- Event listeners
+- Custom attribute and node types
