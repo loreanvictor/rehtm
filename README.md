@@ -27,4 +27,4 @@ document.body.append(html`
 - 🔗 Element references
 - 📦 Object properties for [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
 - 🚀 Cached [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for performance
-- 🔩 Extensions for custom attribute and node types
+- 🧩 Extensions for custom attribute and node types
