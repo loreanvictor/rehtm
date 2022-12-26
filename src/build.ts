@@ -3,12 +3,12 @@ import { cache } from './cache'
 
 
 export function build(factory: DOMFactory) {
-  const { get } = cache(factory)
+  const cached = cache(factory)
 
   return {
-    html: (strings: TemplateStringsArray, ...values: unknown[]) => get(strings, ...values).create(...values),
+    html: (strings: TemplateStringsArray, ...values: unknown[]) => cached.get(strings, ...values).create(...values),
     template: (strings: TemplateStringsArray, ...values: unknown[]) => {
-      const recipe = get(strings, ...values)
+      const recipe = cached.get(strings, ...values)
 
       return {
         hydrate: (node: Node) => recipe.apply([node], ...values),
@@ -16,6 +16,7 @@ export function build(factory: DOMFactory) {
         create: () => recipe.create(...values),
       }
     },
-    recipe: get,
+    recipe: cached.get,
+    cached,
   }
 }

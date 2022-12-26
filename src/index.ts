@@ -9,4 +9,7 @@ import { extend, domFactory } from './factory'
 import { functionalEventListenerExt, objectPropsExt, refExt } from './extensions'
 
 
-export const { html, template } = build(extend(domFactory, functionalEventListenerExt, objectPropsExt, refExt))
+export const {
+  html, template,
+  recipe, cached
+} = build(extend(domFactory, functionalEventListenerExt, objectPropsExt, refExt))
