@@ -17,26 +17,25 @@ export function map(slot: Slot) {
 }
 
 
-export class WrongAddressError extends Error {
-  constructor(public readonly address: number[], public readonly host: Node | Node[] | NodeList) {
-    super(`Address ${address.join('->')} not found on ${host}`)
-  }
-}
-
-
-export function locate(slot: Slot, host: DocumentFragment | Node[] | NodeList) {
+export function locate(slot: Slot, host: Node | Node[] | NodeList) {
   const address = slot.address!
   const first = ((host instanceof NodeList || Array.isArray(host)) ? host[address[0]!] : host.childNodes[address[0]!])!
+  let node = first
+  const matched: number[] = [address[0]!]
 
-  return address.slice(1).reduce((node: Node, index) => {
-    const candidate = node.childNodes[index]
+  for (let i = 1; i < address.length; i++) {
+    const step = address[i]!
+    const candidate = node.childNodes[step]
 
-    if (!candidate) {
-      throw new WrongAddressError(slot.address!, host)
+    if (candidate) {
+      node = candidate
+      matched.push(step)
+    } else {
+      break
     }
+  }
 
-    return candidate
-  }, first)
+  return { node, matched }
 }
 
 

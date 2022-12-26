@@ -27,14 +27,4 @@ export class RecipeExt implements DOMFactoryExt {
       return fallback(parent, value)
     }
   }
-
-  fill(node, value, fallback) {
-    if (isSlottedParam(value)) {
-      const recipe = this.recipe()
-      recipe.slot(value.index, node)
-      fallback(node, value.value)
-    } else {
-      fallback()
-    }
-  }
 }

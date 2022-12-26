@@ -1,4 +1,5 @@
 import { DOMFactory } from '../factory'
+import { WrongAddressError } from './errors'
 import { locate, map, Slot } from './slot'
 
 
@@ -22,13 +23,21 @@ export class Recipe {
     Object.values(this.slots).forEach(map)
   }
 
-  apply(target: DocumentFragment | Node[] | NodeList, ...values: unknown[]) {
+  apply(target: Node | Node[] | NodeList, ...values: unknown[]) {
     Object.entries(this.slots).forEach(([index, slot]) => {
-      const node = locate(slot, target)
-      if (slot.attribute) {
-        this.factory.attribute(node as Element, slot.attribute, values[index], this.factory)
+      const { node, matched } = locate(slot, target)
+      if (matched.length !== slot.address!.length) {
+        if (!slot.attribute && matched.length === slot.address!.length - 1 && node.childNodes.length === 0) {
+          this.factory.append(node, values[index], this.factory)
+        } else {
+          throw new WrongAddressError(slot.address!, matched, target)
+        }
       } else {
-        this.factory.fill(node, values[index], this.factory)
+        if (slot.attribute) {
+          this.factory.attribute(node as Element, slot.attribute, values[index], this.factory)
+        } else {
+          this.factory.fill(node, values[index], this.factory)
+        }
       }
     })
   }
