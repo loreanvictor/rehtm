@@ -1,8 +1,8 @@
 <div align="right">
 
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/rehtm/coverage.yml?label=&style=flat-square)](https://github.com/loreanvictor/rehtm/actions/workflows/coverage.yml)
-[![npm](https://img.shields.io/npm/v/rehtm?color=black&label=&style=flat-square)](https://www.npmjs.com/package/rehtm)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/rehtm?color=black&label=&style=flat-square)](https://bundlephobia.com/package/rehtm@latest)
+[![npm](https://img.shields.io/npm/v/rehtm?color=black&label=&style=flat-square)](https://www.npmjs.com/package/rehtm)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/rehtm/coverage.yml?label=&style=flat-square)](https://github.com/loreanvictor/rehtm/actions/workflows/coverage.yml)
 
 </div>
 
@@ -23,8 +23,11 @@ document.body.append(html`
   </div>
 `)
 ```
+<div align="right">
 
-<br>
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/wvxKJyq?editors=0010)
+
+</div>
 
 - 🧬 [Hydration](https://en.wikipedia.org/wiki/Hydration_(web_development)) for pre-rendered content (e.g. SSR)
 - ⚡ Functions as Event Listeners
