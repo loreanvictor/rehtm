@@ -1,5 +1,6 @@
 jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
 
+import { domFactory } from '../../factory'
 import { build } from '../index'
 
 
@@ -7,7 +8,7 @@ describe('template', () => {
   afterEach(() => document.body.innerHTML = '')
 
   test('it creates a template that can be re-used.', () => {
-    const template = build()
+    const template = build(domFactory)
     const tmpl = template`<div>hello</div>`
 
     document.body.appendChild(tmpl.create())
@@ -18,7 +19,7 @@ describe('template', () => {
   })
 
   test('it creates a template with slots and stuff.', () => {
-    const template = build()
+    const template = build(domFactory)
     const tmpl = template`<div class=${0} aria-role=button>hello <b>${1}</b></div>`
 
     document.body.appendChild(tmpl.create('foo', 'world'))
@@ -31,7 +32,7 @@ describe('template', () => {
   })
 
   test('it also works for lists of elements.', () => {
-    const template = build()
+    const template = build(domFactory)
     const tmpl = template`<b>${0}</b><i>${1}</i>`
 
     document.body.appendChild(tmpl.create('foo', 'bar'))

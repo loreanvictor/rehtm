@@ -1,20 +1,21 @@
-import { build as buildTemplate, SmartTemplate } from './template'
+import { DOMFactory } from './factory'
+import { cache } from './cache'
 
 
-// TODO: accept processors and pass them down
-export function build() {
-  const template = buildTemplate()
-  const cache = new Map<string, SmartTemplate>()
+export function build(factory: DOMFactory) {
+  const { get } = cache(factory)
 
-  return (strings: TemplateStringsArray, ...values: unknown[]) => {
-    const key = strings.join('&')
-    if (cache.has(key)) {
-      return cache.get(key)!.create(...values)
-    } else {
-      const host = template(strings, ...values)
-      cache.set(key, host)
+  return {
+    html: (strings: TemplateStringsArray, ...values: unknown[]) => get(strings, ...values).create(...values),
+    template: (strings: TemplateStringsArray, ...values: unknown[]) => {
+      const recipe = get(strings, ...values)
 
-      return host.create(...values)
-    }
+      return {
+        hydrate: (node: Node) => recipe.apply([node], ...values),
+        hydrateRoot: (root: Node) => recipe.apply(root.childNodes, ...values),
+        create: () => recipe.create(...values),
+      }
+    },
+    recipe: get,
   }
 }

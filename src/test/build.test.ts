@@ -1,5 +1,6 @@
 jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
 
+import { domFactory } from '../factory'
 import { build } from '../index'
 
 
@@ -7,7 +8,7 @@ describe('html', () => {
   afterEach(() => document.body.innerHTML = '')
 
   test('creates an element with given stuff.', () => {
-    const html = build()
+    const { html } = build(domFactory)
     const comp = (name: string) => html`<div>hello ${name}</div>`
     document.body.appendChild(comp('world'))
 
@@ -27,7 +28,7 @@ describe('html', () => {
       return ogCreateElement.call(document, tag, options)
     }
 
-    const html = build()
+    const { html } = build(domFactory)
 
     const comp = (name: string) => html`<div>hello ${name}</div>`
 
