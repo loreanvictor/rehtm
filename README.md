@@ -53,3 +53,68 @@ import { html } from 'https://esm.sh/rehtm'
 ```
 
 <br>
+
+# Usage
+
+Render DOM:
+
+```js
+import { html } from 'rehtm'
+
+const name = 'World'
+document.body.append(html`<div>Hellow ${name}!</div>`)
+```
+
+Add event listeners:
+
+```js
+document.body.append(html`
+  <button onclick=${() => alert('CLICKED!')}>
+    Click ME!
+  </button>
+`)
+```
+
+Use `ref()` to get references to created elements:
+
+```js
+import { ref, html } from 'rehtm'
+
+const el = ref()
+document.body.append(html`<div ref=${el}>Hellow World!</div>`)
+
+console.log(el.current)
+// <div>Hellow World!</div>
+```
+<br>
+
+> 💡 [**re**htm](.) creates [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for any string literal and reuses them
+> when possible. The following elements are all constructed from the same template:
+> ```js
+> html`<div class=${'foo'}>Hellow ${'World'}</div>`
+> html`<div class=${'bar'}>Hellow ${'Welt'}</div>`
+> html`<div class=${'baz'}>Hellow ${'Universe'}</div>`
+> ```
+
+<br>
+
+## Hydration
+
+[**re**htm](.) can also breath life into content already rendered (for example, when it is rendered on the server):
+
+```js
+import { template, ref } from 'rehtm'
+
+const span = ref()
+let count = 0
+
+// 👇 create a template to hydrate existing DOM:
+const tmpl = template`
+  <div onclick=${() => span.current.textContent = ++count}>
+    Clicked <span ref=${span}>${count}</span> times!
+  </div>
+`
+
+// 👇 hydrate existing DOM:
+tmpl.hydrate(document.querySelector('div'))
+```
