@@ -4,11 +4,14 @@
 Create [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com/developit/htm):
 
 ```js
-import { html } from 'rehtm'
+import { html, ref } from 'rehtm'
 
-document.body.appendChild(html`
-  <div onclick=${() => console.log('HI!')}>
-    Hellow World!
+let count = 0
+const span = ref()
+
+document.body.append(html`
+  <div onclick=${() => span.current.innerHTML = ++count}>
+    Clicked <span ref=${span}>${count}</span> times!
   </div>
 `)
 ```
@@ -17,8 +20,11 @@ document.body.appendChild(html`
 [![npm](https://img.shields.io/npm/v/rehtm?color=black&label=version&style=flat-square)](https://www.npmjs.com/package/rehtm)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/rehtm?color=black&label=size&style=flat-square)](https://bundlephobia.com/package/rehtm@latest)
 
+<br>
+
+- 🧬 [Hydration](https://en.wikipedia.org/wiki/Hydration_(web_development)) for pre-rendered content (e.g. SSR)
+- ⚡ Functions as Event Listeners
+- 🔗 Element references
+- 📦 Object properties for [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
 - 🚀 Cached [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for performance
-- 🧬 [Rehydration](https://en.wikipedia.org/wiki/Hydration_(web_development)) for server-rendered content
-- ⚡ Event listeners on DOM elements
-- 📦 Custom properties for [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
-- 🔩 Custom attribute and node types
+- 🔩 Extensions for custom attribute and node types
