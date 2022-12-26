@@ -16,9 +16,9 @@ document.body.append(html`
 `)
 ```
 
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/rehtm/coverage.yml?color=black&label=tests&style=flat-square)](https://github.com/loreanvictor/rehtm/actions/workflows/coverage.yml)
-[![npm](https://img.shields.io/npm/v/rehtm?color=black&label=version&style=flat-square)](https://www.npmjs.com/package/rehtm)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/rehtm?color=black&label=size&style=flat-square)](https://bundlephobia.com/package/rehtm@latest)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/rehtm/coverage.yml?label=&style=flat-square)](https://github.com/loreanvictor/rehtm/actions/workflows/coverage.yml)
+[![npm](https://img.shields.io/npm/v/rehtm?color=black&label=&style=flat-square)](https://www.npmjs.com/package/rehtm)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/rehtm?color=black&label=&style=flat-square)](https://bundlephobia.com/package/rehtm@latest)
 
 <br>
 
