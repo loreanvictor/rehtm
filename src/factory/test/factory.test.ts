@@ -49,6 +49,23 @@ describe('factory', () => {
     expect(document.body.innerHTML).toBe('<b></b><div>Halo</div>')
   })
 
+  test('extended factories fallback properly on other methods.', () => {
+    const fact = extend(domFactory, {
+      create(type, _, __, fallback) {
+        if (type === 42) {
+          return fallback('b')
+        } else {
+          return fallback()
+        }
+      }
+    })
+
+    const el = fact.create(42, {}, [], fact) as HTMLElement
+    fact.attribute(el, 'x', 43, fact)
+
+    expect(el.outerHTML).toBe('<b x="43"></b>')
+  })
+
   test('can be extended to support new attribute types.', () => {
     const cb = jest.fn()
 
@@ -63,7 +80,9 @@ describe('factory', () => {
       }
     })
 
-    document.body.append(fact.create('div', {x: 42}, [], fact))
+    const div = fact.create('div', {}, [], fact) as HTMLElement
+    fact.attribute(div, 'x', 42, fact)
+    document.body.append(div)
     expect(cb).toBeCalledTimes(1)
     expect(document.body.innerHTML).toBe('<div y="42"></div>')
   })
