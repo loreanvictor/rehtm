@@ -64,7 +64,7 @@ import { html } from 'rehtm'
 const name = 'World'
 document.body.append(html`<div>Hellow ${name}!</div>`)
 ```
-
+<br>
 Add event listeners:
 
 ```js
@@ -74,6 +74,7 @@ document.body.append(html`
   </button>
 `)
 ```
+<br>
 
 Use `ref()` to get references to created elements:
 
@@ -86,6 +87,39 @@ document.body.append(html`<div ref=${el}>Hellow World!</div>`)
 console.log(el.current)
 // <div>Hellow World!</div>
 ```
+<br>
+
+Set object properties:
+```js
+const div = ref()
+html`<div ref=${div} prop=${{x: 2}}>Some content</div>`
+
+console.log(div.current.prop)
+// > { x: 2 }
+```
+If the object properties are set on a custom element with a `.setProperty()` method, then that method will be called instead:
+```js
+import { define, onProperty } from 'minicomp'
+import { html, ref } from 'rehtm'
+
+
+define('say-hi', () => {
+  const target = ref()
+  onProperty('to', person => target.current.textContent = person.name)
+
+  return html`<div>Hellow <span ref=${target} /></div>
+})
+
+
+const jack = { name: 'Jack', ... }
+const jill = { name: 'Jill', ... }
+
+document.body.append(html`
+  <say-hi to=${jack} />
+  <say-hi to=${jill} />
+`)
+```
+
 <br>
 
 > 💡 [**re**htm](.) creates [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for any string literal and reuses them
@@ -117,4 +151,70 @@ const tmpl = template`
 
 // 👇 hydrate existing DOM:
 tmpl.hydrate(document.querySelector('div'))
+```
+```html
+<div>
+  Clicked <span>0</span> times.
+</div>
+```
+
+<div align="right">
+
+[**▷ TRY IT**](https://codepen.io/lorean_victor/pen/vYaNqPw?editors=1010)
+
+</div>
+
+Use `.hydateRoot()` to hydrate children of an element instead of the element itself:
+
+```js
+const tmpl = template`
+  <i>${'some stuff'}</i>
+  <b>${'other stuff'}</b>
+`
+
+tmpl.hydrateRoot(document.querySelector('#root'))
+```
+```html
+<div id="root">
+  <i>This will be reset.</i>
+  <b>This also.</b>
+</div>
+```
+
+<br>
+
+> 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM.
+
+<br>
+
+# Contribution
+
+You need [node](https://nodejs.org/en/), [NPM](https://www.npmjs.com) to start and [git](https://git-scm.com) to start.
+
+```bash
+# clone the code
+git clone git@github.com:loreanvictor/minicomp.git
+```
+```bash
+# install stuff
+npm i
+```
+
+Make sure all checks are successful on your PRs. This includes all tests passing, high code coverage, correct typings and abiding all [the linting rules](https://github.com/loreanvictor/quel/blob/main/.eslintrc). The code is typed with [TypeScript](https://www.typescriptlang.org), [Jest](https://jestjs.io) is used for testing and coverage reports, [ESLint](https://eslint.org) and [TypeScript ESLint](https://typescript-eslint.io) are used for linting. Subsequently, IDE integrations for TypeScript and ESLint would make your life much easier (for example, [VSCode](https://code.visualstudio.com) supports TypeScript out of the box and has [this nice ESLint plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)), but you could also use the following commands:
+
+```bash
+# run tests
+npm test
+```
+```bash
+# check code coverage
+npm run coverage
+```
+```bash
+# run linter
+npm run lint
+```
+```bash
+# run type checker
+npm run typecheck
 ```
