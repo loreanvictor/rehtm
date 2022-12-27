@@ -56,7 +56,7 @@ import { html } from 'https://esm.sh/rehtm'
 
 # Usage
 
-Render DOM:
+👉 Render DOM:
 
 ```js
 import { html } from 'rehtm'
@@ -65,7 +65,7 @@ const name = 'World'
 document.body.append(html`<div>Hellow ${name}!</div>`)
 ```
 <br>
-Add event listeners:
+👉 Add event listeners:
 
 ```js
 document.body.append(html`
@@ -76,7 +76,7 @@ document.body.append(html`
 ```
 <br>
 
-Use `ref()` to get references to created elements:
+👉 Use `ref()` to get references to created elements:
 
 ```js
 import { ref, html } from 'rehtm'
@@ -89,7 +89,7 @@ console.log(el.current)
 ```
 <br>
 
-Set object properties:
+👉 Set object properties:
 ```js
 const div = ref()
 html`<div ref=${div} prop=${{x: 2}}>Some content</div>`
@@ -134,7 +134,7 @@ document.body.append(html`
 
 ## Hydration
 
-[**re**htm](.) can also breath life into content already rendered (for example, when it is rendered on the server):
+👉 Use `template`s to breath life into content already rendered (for example, when it is rendered on the server):
 
 ```js
 import { template, ref } from 'rehtm'
@@ -164,7 +164,7 @@ tmpl.hydrate(document.querySelector('div'))
 
 </div>
 
-Use `.hydateRoot()` to hydrate children of an element instead of the element itself:
+👉 Use `.hydateRoot()` to hydrate children of an element instead of the element itself:
 
 ```js
 const tmpl = template`
