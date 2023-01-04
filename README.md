@@ -107,7 +107,7 @@ define('say-hi', () => {
   const target = ref()
   onProperty('to', person => target.current.textContent = person.name)
 
-  return html`<div>Hellow <span ref=${target} /></div>
+  return html`<div>Hellow <span ref=${target} /></div>`
 })
 
 
