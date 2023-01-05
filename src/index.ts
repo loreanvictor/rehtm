@@ -1,7 +1,7 @@
-export { build as buildTemplate, Recipe as SmartTemplate } from './template'
+export { build as buildRecipe, Recipe } from './template'
 export * from './factory'
-export * from './cache'
 export * from './extensions'
+export * from './cache'
 export * from './build'
 
 import { build } from './build'

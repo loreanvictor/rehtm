@@ -1,6 +1,6 @@
 {
   "name": "rehtm",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "create HTML using HTM",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
