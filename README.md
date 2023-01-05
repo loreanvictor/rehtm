@@ -38,6 +38,16 @@ document.body.append(html`
 
 <br>
 
+# Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Hydration](#hydration)
+  - [Extension](#extension)
+- [Contribution](#contribution)
+
+<br>
+
 # Installation
 
 [Node](https://nodejs.org/en/):
@@ -184,6 +194,139 @@ tmpl.hydrateRoot(document.querySelector('#root'))
 <br>
 
 > 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM.
+
+<br>
+
+👉 Use `.create()` for using a template to create elements with different values:
+```js
+const tmpl = template`<div>Hellow ${'World'}</div>`
+
+tmpl.create('Jack')
+// > <div>Hellow Jack</div>
+```
+
+<br>
+
+> 💡 `html` template tag also creates templates and uses `.create()` method to generate elements. It caches each template based on its string parts, and reloads the same template the next time it comes upon the same string bits.
+
+<br>
+
+## Extension
+
+You can create your own `html` and `template` tags with extended behavior. For that, you need a baseline DOM factory, extended with some extensions, passed to the `build()` function. For example, this is ([roughly](https://github.com/loreanvictor/rehtm/blob/412b87ad36f204491e56429291a339443dd978f5/src/index.ts#L12-L15)) how the default `html` and `template` tags are generated:
+
+```js
+import {
+  build,         // 👉 builds template tags from given DOM factory, with caching enabled.
+  extend,        // 👉 extends given DOM factory with given extensions.
+  domFactory,    // 👉 this is the baseline DOM factory that just creates elements.
+  
+  // 👉 this extension allows using functions as event listeners
+  functionalEventListenersExt,
+  
+  // 👉 this extension allows setting object properties
+  objectPropsExt,
+  
+  // 👉 this extension enables references
+  refExt,
+} from 'rehtm'
+
+
+const { html, template } = build(
+  extend(domFactory,
+    functionalEventListenersExt,
+    objectPropsExt,
+    refExt,
+  )
+)
+```
+
+<br>
+
+An extension can extend any of these four core functionalities:
+
+- `create(type, props, children, fallback, self)` \
+  Is used when creating a new element. `children` is an already processed array of values. Should return the created node.
+  <br>
+  
+- `attribute(node, name, value, fallback, self)` \
+  Is used when setting an attribute on an element (a `create()` extension might bypass this).
+  <br>
+
+- `append(node, value, fallback, self)` \
+  Is used when appending a child to a node (a `create()` extension might bypass this). Should return the appended node (or its analouge).
+  <br>
+
+- `fill(node, value, fallback, self)` \
+  Is used when hydrating a node with some content.
+  <br>
+  
+<br>
+  
+👉  Each method is given a `fallback()`, which it can invoke to invoke prior extensions (or the original factory): 
+
+```js
+const myExt = {
+  attribute(node, name, value, fallback) {
+    if (name === 'some-attr') {
+      // do the magic 
+    } else {
+      // not our thing, let others set this
+      // particular attribute
+      fallback()
+    }
+  }
+}
+```
+
+You can also call `fallback()` with modified arguments:
+
+```js
+fallback(node, modify(name), value.prop)
+```
+
+<br>
+
+👉 Each method is also given a `self` object, which represents the final DOM factory. It can be used when you need to
+invoke other methods of the host factory:
+
+```js
+const myExt = {
+  create(tag, props, children, fallback, self) {
+    if (tag === 'my-custom-thing') {
+      const node = fallback('div')
+      self.attribute(node, 'class', 'my-custom-thingy', self)
+
+      if (props) {
+        for (const name in props) {
+          self.attribute(node, name, props[name], self)
+        }
+      }
+      
+      // ...
+    } else {
+      return fallback()
+    }
+  }
+}
+```
+
+<br>
+
+You can see some extension examples [here](https://github.com/loreanvictor/rehtm/tree/main/src/extensions). For examle, this is how the functional event listeners extension works:
+
+```js
+export const functionalEventListenerExt = {
+  attribute(node, name, value, fallback) {
+    if (name.startsWith('on') && typeof value === 'function') {
+      const eventName = name.slice(2).toLowerCase()
+      node.addEventListener(eventName, value)
+    } else {
+      fallback()
+    }
+  }
+}
+```
 
 <br>
 
