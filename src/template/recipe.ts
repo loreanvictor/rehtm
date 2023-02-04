@@ -9,7 +9,7 @@ export class Recipe {
   readonly template: HTMLTemplateElement
 
   constructor(readonly factory: DOMFactory) {
-    this.template = document.createElement('template')
+    this.template = factory.document.createElement('template')
   }
 
   slot(index: number, node: Node, attribute?: string) {
@@ -43,7 +43,7 @@ export class Recipe {
   }
 
   create(...values: unknown[]) {
-    const target = document.importNode(this.template.content, true)
+    const target = this.factory.document.importNode(this.template.content, true)
     this.apply(target, ...values)
 
     return target

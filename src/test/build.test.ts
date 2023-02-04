@@ -7,7 +7,7 @@ describe(build, () => {
   afterEach(() => document.body.innerHTML = '')
 
   test('creates an element with given stuff.', () => {
-    const { html } = build(domFactory)
+    const { html } = build(domFactory())
     const comp = (name: string) => html`<div>hello ${name}</div>`
     document.body.appendChild(comp('world'))
 
@@ -27,7 +27,7 @@ describe(build, () => {
       return ogCreateElement.call(document, tag, options)
     }
 
-    const { html } = build(domFactory)
+    const { html } = build(domFactory())
 
     const comp = (name: string) => html`<div>hello ${name}</div>`
 
@@ -57,7 +57,7 @@ describe(build, () => {
       return ogCreateElement.call(document, tag, options)
     }
 
-    const { html, cached } = build(domFactory)
+    const { html, cached } = build(domFactory())
 
     document.body.append(html`<div>Hellow!</div>`)
     document.body.append(html`<div>Hellow!</div>`)
@@ -72,7 +72,7 @@ describe(build, () => {
   })
 
   test('creates a template that can create elements.', () => {
-    const { template } = build(domFactory)
+    const { template } = build(domFactory())
 
     const tmpl = template`<div>hello ${'world'}</div>`
     document.body.append(tmpl.create())
@@ -85,7 +85,7 @@ describe(build, () => {
   test('can hydrate other elements.', () => {
     const cb = jest.fn()
 
-    const { template } = build(extend(domFactory, functionalEventListenerExt))
+    const { template } = build(extend(domFactory(), functionalEventListenerExt))
 
     const tmpl = template`<div onclick=${cb}>hello <i>${'world'}</i></div>`
     document.body.innerHTML = '<div>hi <i></i></div>'
@@ -101,7 +101,7 @@ describe(build, () => {
   test('can hydrate other elements from their root too', () => {
     const cb = jest.fn()
 
-    const { template } = build(extend(domFactory, functionalEventListenerExt))
+    const { template } = build(extend(domFactory(), functionalEventListenerExt))
 
     const tmpl = template`<b onclick=${cb}>CLICK ME!</b><i>${'World'}</i>`
 

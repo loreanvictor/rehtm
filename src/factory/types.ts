@@ -29,4 +29,5 @@ export interface DOMFactory {
   attribute: AttributeFn
   append: AppendFn
   fill: FillFn
+  document: Document
 }

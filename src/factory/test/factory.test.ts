@@ -5,32 +5,37 @@ describe('factory', () => {
   afterEach(() => document.body.innerHTML = '')
 
   test('creates DOM elements.', () => {
-    document.body.appendChild(domFactory.create('div', { id: 'test' }, ['hellow world'], domFactory))
+    const factory = domFactory()
+    document.body.appendChild(factory.create('div', { id: 'test' }, ['hellow world'], factory))
     expect(document.getElementById('test')).not.toBeNull()
     expect(document.getElementById('test')!.textContent).toBe('hellow world')
   })
 
   test('throws error for unsupported tags.', () => {
-    expect(() => domFactory.create(42, {}, [], domFactory)).toThrowError()
+    const factory = domFactory()
+    expect(() => factory.create(42, {}, [], factory)).toThrowError()
   })
 
   test('throws errors when setting unsupported attributes', () => {
-    expect(() => domFactory.create('div', {x: [42]}, [], domFactory)).toThrowError()
+    const factory = domFactory()
+    expect(() => factory.create('div', {x: [42]}, [], factory)).toThrowError()
   })
 
   test('throws error for unsupported childs.', () => {
-    expect(() => domFactory.create('div', {}, [[42]], domFactory)).toThrowError()
+    const factory = domFactory()
+    expect(() => factory.create('div', {}, [[42]], factory)).toThrowError()
   })
 
   test('throws error for unsupported content to fill.', () => {
+    const factory = domFactory()
     const b = document.createElement('b')
-    expect(() => domFactory.fill(b, [42], domFactory)).toThrowError()
+    expect(() => factory.fill(b, [42], factory)).toThrowError()
   })
 
   test('can be extended to support new tag types.', () => {
     const cb = jest.fn()
 
-    const fact = extend(domFactory, {
+    const fact = extend(domFactory(), {
       create(type, _, __, fallback) {
         if (type === 42) {
           cb()
@@ -50,7 +55,7 @@ describe('factory', () => {
   })
 
   test('extended factories fallback properly on other methods.', () => {
-    const fact = extend(domFactory, {
+    const fact = extend(domFactory(), {
       create(type, _, __, fallback) {
         if (type === 42) {
           return fallback('b')
@@ -69,7 +74,7 @@ describe('factory', () => {
   test('can be extended to support new attribute types.', () => {
     const cb = jest.fn()
 
-    const fact = extend(domFactory, {
+    const fact = extend(domFactory(), {
       attribute(el, name, __, fallback) {
         if (name === 'x') {
           cb()
@@ -90,7 +95,7 @@ describe('factory', () => {
   test('can be extended to support new child types.', () => {
     const cb = jest.fn()
 
-    const fact = extend(domFactory, {
+    const fact = extend(domFactory(), {
       append(el, child, fallback) {
         if (Array.isArray(child)) {
           cb()
@@ -110,7 +115,7 @@ describe('factory', () => {
   test('can be extended to support new fill types.', () => {
     const cb = jest.fn()
 
-    const fact = extend(domFactory, {
+    const fact = extend(domFactory(), {
       fill(el, child, fallback) {
         if (Array.isArray(child)) {
           cb()
@@ -129,6 +134,7 @@ describe('factory', () => {
   })
 
   test('extension of factory without any extensions should be itself.', () => {
-    expect(extend(domFactory)).toBe(domFactory)
+    const factory = domFactory()
+    expect(extend(factory)).toBe(factory)
   })
 })

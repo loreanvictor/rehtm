@@ -48,6 +48,7 @@ export function extend(factory: DOMFactory, ...exts: DOMFactoryExt[]): DOMFactor
   const ext = exts[0]!
 
   return {
+    document: factory.document,
     create: (type, props, children, self) => ext.create ?
       ext.create(type, props, children,
         (t, p, c, s) => factory.create(t ?? type, p ?? props, c ?? children, s ?? self),

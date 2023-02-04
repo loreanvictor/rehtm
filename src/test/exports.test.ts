@@ -9,7 +9,7 @@ import {
 
   functionalEventListenerExt, objectPropsExt, refExt,
 
-  cache, build,
+  cache, build, re,
 
 } from '../index'
 
@@ -38,6 +38,7 @@ test('everything is exported properly.', () => {
 
   expect(cache).not.toBe(undefined)
   expect(build).not.toBe(undefined)
+  expect(re).not.toBe(undefined)
 })
 
 

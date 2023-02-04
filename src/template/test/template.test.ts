@@ -9,7 +9,7 @@ describe('template', () => {
   afterEach(() => document.body.innerHTML = '')
 
   test('creates a template that can be re-used.', () => {
-    const template = build(domFactory)
+    const template = build(domFactory())
     const tmpl = template`<div>hello</div>`
 
     document.body.appendChild(tmpl.create())
@@ -20,7 +20,7 @@ describe('template', () => {
   })
 
   test('creates a template with slots and stuff.', () => {
-    const template = build(domFactory)
+    const template = build(domFactory())
     const tmpl = template`<div class=${0} aria-role=button>hello <b>${1}</b></div>`
 
     document.body.appendChild(tmpl.create('foo', 'world'))
@@ -33,7 +33,7 @@ describe('template', () => {
   })
 
   test('also works for lists of elements.', () => {
-    const template = build(domFactory)
+    const template = build(domFactory())
     const tmpl = template`<b>${0}</b><i>${1}</i>`
 
     document.body.appendChild(tmpl.create('foo', 'bar'))
@@ -48,7 +48,7 @@ describe('template', () => {
   })
 
   test('can hydrate a list of nodes.', () => {
-    const template = build(domFactory)
+    const template = build(domFactory())
     const tmpl = template`<b>${0}</b><i>${1}</i>`
 
     const b = document.createElement('b')
@@ -60,7 +60,7 @@ describe('template', () => {
   })
 
   test('can hydrate a node list.', () => {
-    const template = build(domFactory)
+    const template = build(domFactory())
     const tmpl = template`<b>${0}</b><i>${1}</i>`
 
     document.body.innerHTML = '<b></b><i></i>'
@@ -76,7 +76,7 @@ describe('template', () => {
   })
 
   test('throws proper error when cant hydrate.', () => {
-    const template = build(domFactory)
+    const template = build(domFactory())
     const tmpl = template`<div>hello <b>${1}</b></div>`
 
     document.body.innerHTML = '<div>Hi</div>'

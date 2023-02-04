@@ -3,13 +3,11 @@ export * from './factory'
 export * from './extensions'
 export * from './cache'
 export * from './build'
+export * from './re'
 
-import { build } from './build'
-import { extend, domFactory } from './factory'
-import { functionalEventListenerExt, objectPropsExt, refExt } from './extensions'
-
+import { re } from './re'
 
 export const {
   html, template,
   recipe, cached
-} = build(extend(domFactory, functionalEventListenerExt, objectPropsExt, refExt))
+} = re(window.document)

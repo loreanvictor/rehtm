@@ -56,4 +56,4 @@ export const domFactoryExt: DOMFactoryExt = {
 }
 
 
-export const domFactory = extend(nullFactory, domFactoryExt)
+export const domFactory = (document = window.document) => extend(nullFactory(document), domFactoryExt)

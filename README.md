@@ -40,9 +40,11 @@ document.body.append(html`
 
 # Contents
 
+- [Contents](#contents)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Hydration](#hydration)
+  - [Global Document Object](#global-document-object)
   - [Extension](#extension)
 - [Contribution](#contribution)
 
@@ -193,7 +195,7 @@ tmpl.hydrateRoot(document.querySelector('#root'))
 
 <br>
 
-> 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM.
+> 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM. This can be particularly tricky with the presence of text nodes that contain whitespace (e.g. newlines, tabs, etc.). To avoid this, make sure you are hydrating DOM that was created using the same template string.
 
 <br>
 
@@ -211,6 +213,23 @@ tmpl.create('Jack')
 
 <br>
 
+## Global Document Object
+
+You might want to use [**rehtm**](.) in an environment where there is no global `document` object present (for example, during server side rendering). For such situations, use the `re()` helper function to create `html` and `template` tags for a specific document object:
+
+```js
+import { re } from 'rehtm'
+
+const { html, template } = re(document)
+document.body.append(html`<div>Hellow World!</div>`)
+```
+
+<br>
+
+> `re()` reuses same build for same document object, all templates remain cached.
+
+<br>
+
 ## Extension
 
 You can create your own `html` and `template` tags with extended behavior. For that, you need a baseline DOM factory, extended with some extensions, passed to the `build()` function. For example, this is ([roughly](https://github.com/loreanvictor/rehtm/blob/412b87ad36f204491e56429291a339443dd978f5/src/index.ts#L12-L15)) how the default `html` and `template` tags are generated:
@@ -219,7 +238,7 @@ You can create your own `html` and `template` tags with extended behavior. For t
 import {
   build,         // 👉 builds template tags from given DOM factory, with caching enabled.
   extend,        // 👉 extends given DOM factory with given extensions.
-  domFactory,    // 👉 this is the baseline DOM factory that just creates elements.
+  domFactory,    // 👉 this creates a baseline DOM factory.
   
   // 👉 this extension allows using functions as event listeners
   functionalEventListenersExt,
@@ -233,7 +252,8 @@ import {
 
 
 const { html, template } = build(
-  extend(domFactory,
+  extend(
+    domFactory(),
     functionalEventListenersExt,
     objectPropsExt,
     refExt,

@@ -8,7 +8,7 @@ describe('functional event listeners', () => {
   test('adds event listener.', () => {
     const cb = jest.fn()
 
-    const fact = extend(domFactory, functionalEventListenerExt)
+    const fact = extend(domFactory(), functionalEventListenerExt)
     const el = fact.create('div', { onclick: cb, 'aria-label': 'test' }, [], fact) as HTMLElement
     document.body.append(el)
 

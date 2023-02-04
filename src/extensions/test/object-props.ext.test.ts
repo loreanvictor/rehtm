@@ -15,7 +15,7 @@ describe('object properties', () => {
       return '<div></div>'
     })
 
-    const fact = extend(domFactory, objectPropsExt)
+    const fact = extend(domFactory(), objectPropsExt)
     const obj = { test: 'test' }
     const el = fact.create('op-ext-test', { test: obj, id: 'foo' }, [], fact) as HTMLElement
     document.body.append(el)
@@ -26,7 +26,7 @@ describe('object properties', () => {
   })
 
   test('adds properties to native elements too.', () => {
-    const fact = extend(domFactory, objectPropsExt)
+    const fact = extend(domFactory(), objectPropsExt)
     const obj = { test: 'test' }
     const el = fact.create('div', { test: obj, id: 'foo' }, [], fact) as HTMLElement
 
