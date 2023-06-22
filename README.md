@@ -9,7 +9,7 @@
 <img src="logo-dark.svg#gh-dark-mode-only" height="42px"/>
 <img src="logo-light.svg#gh-light-mode-only" height="42px"/>
 
-Create [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com/developit/htm):
+Create and hydrate [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com/developit/htm):
 
 ```js
 import { html, ref } from 'rehtm'
@@ -31,7 +31,7 @@ document.body.append(html`
 
 - 🧬 [Hydration](https://en.wikipedia.org/wiki/Hydration_(web_development)) for pre-rendered content (e.g. SSR)
 - ⚡ Functions as Event Listeners
-- 🔗 Element references
+- 🔗 Element references (instead of element IDs)
 - 📦 Object properties for [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
 - 🚀 Cached [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for performance
 - 🧩 Extensions for custom attribute and node types
