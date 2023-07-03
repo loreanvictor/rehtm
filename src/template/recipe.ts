@@ -25,7 +25,7 @@ export class Recipe {
 
   apply(target: Node | Node[] | NodeList, ...values: unknown[]) {
     Object.entries(this.slots).forEach(([index, slot]) => {
-      const { node, matched } = locate(slot, target)
+      const { node, matched } = locate(slot, target, this.factory.document)
       if (matched.length !== slot.address!.length) {
         if (!slot.attribute && matched.length === slot.address!.length - 1 && node.childNodes.length === 0) {
           this.factory.append(node, values[index], this.factory)

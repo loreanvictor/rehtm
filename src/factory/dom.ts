@@ -2,7 +2,7 @@ import { extend, DOMFactoryExt } from './extension'
 import { nullFactory } from './null'
 
 
-export const domFactoryExt: DOMFactoryExt = {
+export const domFactoryExt: (document: Document) => DOMFactoryExt = (document) => ({
   create: (type, props, children, fallback, self) => {
     if (typeof type === 'string') {
       const node = document.createElement(type)
@@ -32,7 +32,7 @@ export const domFactoryExt: DOMFactoryExt = {
   },
 
   append: (node, value, fallback) => {
-    if (value instanceof Node) {
+    if (value instanceof document.defaultView!.Node) {
       node.appendChild(value)
 
       return value
@@ -53,7 +53,7 @@ export const domFactoryExt: DOMFactoryExt = {
       fallback()
     }
   }
-}
+})
 
 
-export const domFactory = (document = window.document) => extend(nullFactory(document), domFactoryExt)
+export const domFactory = (document = window.document) => extend(nullFactory(document), domFactoryExt(document))

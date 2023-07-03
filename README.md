@@ -6,8 +6,8 @@
 
 </div>
 
-<img src="logo-dark.svg#gh-dark-mode-only" height="42px"/>
-<img src="logo-light.svg#gh-light-mode-only" height="42px"/>
+<img src="./logo-dark.svg#gh-dark-mode-only" height="42px"/>
+<img src="./logo-light.svg#gh-light-mode-only" height="42px"/>
 
 Create [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com/developit/htm):
 

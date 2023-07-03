@@ -16,10 +16,10 @@ export function map(slot: Slot) {
   }
 }
 
-export function locate(slot: Slot, host: Node | Node[] | NodeList) {
+export function locate(slot: Slot, host: Node | Node[] | NodeList, document: Document) {
   const address = slot.address!
   const first = (
-    (host instanceof NodeList || Array.isArray(host)) ?
+    (host instanceof document.defaultView!.NodeList || Array.isArray(host)) ?
       host[address[0]!]
       : host.childNodes[address[0]!]
   )!
