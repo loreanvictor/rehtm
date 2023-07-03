@@ -9,7 +9,7 @@
 <img src="./logo-dark.svg#gh-dark-mode-only" height="42px"/>
 <img src="./logo-light.svg#gh-light-mode-only" height="42px"/>
 
-Create [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com/developit/htm):
+Create and hydrate [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com/developit/htm):
 
 ```js
 import { html, ref } from 'rehtm'
@@ -31,7 +31,7 @@ document.body.append(html`
 
 - 🧬 [Hydration](https://en.wikipedia.org/wiki/Hydration_(web_development)) for pre-rendered content (e.g. SSR)
 - ⚡ Functions as Event Listeners
-- 🔗 Element references
+- 🔗 Element references (instead of element IDs)
 - 📦 Object properties for [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
 - 🚀 Cached [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for performance
 - 🧩 Extensions for custom attribute and node types
@@ -195,7 +195,7 @@ tmpl.hydrateRoot(document.querySelector('#root'))
 
 <br>
 
-> 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM. This can be particularly tricky with the presence of text nodes that contain whitespace (e.g. newlines, tabs, etc.). To avoid this, make sure you are hydrating DOM that was created using the same template string.
+> 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM. This can be particularly tricky with the presence of text nodes that contain whitespace (e.g. newlines, tabs, etc.). To avoid this, make sure you are hydrating DOM that was created using the same template string with [**rehtm**](.).
 
 <br>
 
