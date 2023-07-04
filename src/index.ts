@@ -18,7 +18,7 @@ const wrongFn = name => (..._: any[]) => {
   )
 }
 
-const result: BuildSuite = global.window ? re(global.window.document) : {
+const result: BuildSuite = globalThis.window ? re(globalThis.window.document) : {
   html: wrongFn('html'),
   template: wrongFn('template'),
   recipe: wrongFn('recipe'),

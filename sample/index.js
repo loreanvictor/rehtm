@@ -29,23 +29,39 @@ import { html, template, ref } from '../src'
 
 // --- COMPONENT TEST --- \\
 
-define('say-hi', () => {
-  const _span = ref()
-  const counter = ref()
-  let _count = 0
+// define('say-hi', () => {
+//   const _span = ref()
+//   const counter = ref()
+//   let _count = 0
 
-  onProperty('to', person => _span.current.innerHTML = person.name)
-  onAttribute('to', name => _span.current.innerHTML = name)
+//   onProperty('to', person => _span.current.innerHTML = person.name)
+//   onAttribute('to', name => _span.current.innerHTML = name)
 
-  return html`
-    <div onclick=${() => counter.current.innerHTML = ++_count}>
-      Hellow <span ref=${_span} />!
-      (Clicked <span ref=${counter}>${_count}</span> times)
-    </div>
-  `
-})
+//   return html`
+//     <div onclick=${() => counter.current.innerHTML = ++_count}>
+//       Hellow <span ref=${_span} />!
+//       (Clicked <span ref=${counter}>${_count}</span> times)
+//     </div>
+//   `
+// })
 
-document.body.appendChild(html`
-  <say-hi to="World"></say-hi>
-  <say-hi to="${{name: 'Jack'}}"></say-hi>
+// document.body.appendChild(html`
+//   <say-hi to="World"></say-hi>
+//   <say-hi to="${{name: 'Jack'}}"></say-hi>
+// `)
+
+// --- CUSTOM EVENTS --- \\
+
+document.body.append(html`
+  <div onstuff=${() => console.log('STUFF!')}>
+    Hellow World!
+    <button>Click ME!</button>
+  </div>
 `)
+
+const div = document.querySelector('div')
+const button = document.querySelector('button')
+
+button.addEventListener('click', () => {
+  div.dispatchEvent(new CustomEvent('stuff'))
+})
