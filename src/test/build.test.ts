@@ -114,4 +114,17 @@ describe(build, () => {
     div$.querySelector('b')!.click()
     expect(cb).toHaveBeenCalledTimes(1)
   })
+
+  test('can embed elements in each other.', () => {
+    const { html } = build(domFactory())
+
+    const c1 = html`<div>World!</div>`
+    const c2 = html`<div>halo ${c1}</div>`
+
+    document.body.appendChild(c2)
+
+    const div$ = document.querySelector('div')
+    expect(div$).not.toBeNull()
+    expect(div$!.textContent).toBe('halo World!')
+  })
 })

@@ -1,6 +1,6 @@
 import { DOMFactory } from '../factory'
 import { WrongAddressError } from './errors'
-import { locate, map, Slot } from './slot'
+import { elementify, locate, address, Slot } from './slot'
 
 
 export class Recipe {
@@ -20,7 +20,7 @@ export class Recipe {
 
   finalize() {
     this.#closed = true
-    Object.values(this.slots).forEach(map)
+    Object.values(this.slots).map(elementify).map(address)
   }
 
   apply(target: Node | Node[] | NodeList, ...values: unknown[]) {

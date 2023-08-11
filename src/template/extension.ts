@@ -10,7 +10,7 @@ export class RecipeExt implements DOMFactoryExt {
     if (isSlottedParam(value)) {
       const recipe = this.recipe()
       recipe.slot(value.index, el, name)
-      fallback(el, name, value.value)
+      fallback(el, name, '?')
     } else {
       fallback()
     }
@@ -19,7 +19,7 @@ export class RecipeExt implements DOMFactoryExt {
   append(parent, value, fallback) {
     if (isSlottedParam(value)) {
       const recipe = this.recipe()
-      const node = fallback(parent, value.value)
+      const node = fallback(parent, '?')
       recipe.slot(value.index, node)
 
       return node

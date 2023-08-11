@@ -47,7 +47,10 @@ export const domFactoryExt: (document: Document) => DOMFactoryExt = (document) =
   },
 
   fill: (node, value, fallback) => {
-    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+    if (value instanceof document.defaultView!.Node) {
+      node.childNodes.forEach((child) => node.removeChild(child))
+      node.appendChild(value)
+    } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
       node.textContent = value.toString()
     } else {
       fallback()

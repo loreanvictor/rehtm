@@ -4,30 +4,45 @@ export type Slot = {
   address?: number[]
 }
 
-export function map(slot: Slot) {
+
+export function elementify(slot: Slot) {
+  if (slot.node.nodeType === slot.node.TEXT_NODE) {
+    const element = slot.node.ownerDocument!.createElement('_')
+    slot.node.parentNode?.replaceChild(element, slot.node)
+    slot.node = element
+  }
+
+  return slot
+}
+
+
+export function address(slot: Slot) {
   if (!slot.address) {
     slot.address = []
     let node = slot.node
+
     while (node.parentNode) {
       const index = Array.from(node.parentNode.childNodes).indexOf(node as ChildNode)
       slot.address.unshift(index)
       node = node.parentNode
     }
   }
+
+  return slot
 }
 
 export function locate(slot: Slot, host: Node | Node[] | NodeList, document: Document) {
-  const address = slot.address!
+  const addr = slot.address!
   const first = (
     (host instanceof document.defaultView!.NodeList || Array.isArray(host)) ?
-      host[address[0]!]
-      : host.childNodes[address[0]!]
+      host[addr[0]!]
+      : host.childNodes[addr[0]!]
   )!
   let node = first
-  const matched: number[] = [address[0]!]
+  const matched: number[] = [addr[0]!]
 
-  for (let i = 1; i < address.length; i++) {
-    const step = address[i]!
+  for (let i = 1; i < addr.length; i++) {
+    const step = addr[i]!
     const candidate = node.childNodes[step]
 
     if (candidate) {
@@ -43,10 +58,10 @@ export function locate(slot: Slot, host: Node | Node[] | NodeList, document: Doc
 
 
 const slottedParamSymbol = Symbol()
-export type SlottedParam = { [slottedParamSymbol]: typeof slottedParamSymbol, value: unknown, index: number }
+export type SlottedParam = { [slottedParamSymbol]: typeof slottedParamSymbol, index: number }
 
-export function makeSlottedParam(value: unknown, index: number): SlottedParam {
-  return { [slottedParamSymbol]: slottedParamSymbol, value, index }
+export function makeSlottedParam(index: number): SlottedParam {
+  return { [slottedParamSymbol]: slottedParamSymbol, index }
 }
 
 export function isSlottedParam(value: unknown): value is SlottedParam {

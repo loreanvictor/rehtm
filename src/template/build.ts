@@ -18,7 +18,7 @@ export function build(factory: DOMFactory) {
   return (strings: TemplateStringsArray, ...values: unknown[]) => {
     const recipe = new Recipe(factory)
     ctx.push(recipe)
-    const result = template(strings, ...values.map((value, index) => makeSlottedParam(value, index)))
+    const result = template(strings, ...values.map((_, index) => makeSlottedParam(index)))
     ctx.pop()
 
     if (Array.isArray(result)) {
