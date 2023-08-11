@@ -11,6 +11,18 @@ describe('factory', () => {
     expect(document.getElementById('test')!.textContent).toBe('hellow world')
   })
 
+  test('can fill DOM elements with other elements.', () => {
+    const factory = domFactory()
+    const b = document.createElement('b')
+    factory.fill(b, 'hellow world', factory)
+    expect(b.textContent).toBe('hellow world')
+
+    const span = document.createElement('span')
+    factory.fill(span, 'Hi Hi!', factory)
+    factory.fill(b, span, factory)
+    expect(b.textContent).toBe('Hi Hi!')
+  })
+
   test('throws error for unsupported tags.', () => {
     const factory = domFactory()
     expect(() => factory.create(42, {}, [], factory)).toThrowError()
