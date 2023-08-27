@@ -6,6 +6,7 @@ export const functionalEventListenerExt: DOMFactoryExt = {
     if (name.startsWith('on') && typeof value === 'function') {
       const eventName = name.slice(2).toLowerCase()
       node.addEventListener(eventName as keyof ElementEventMap, value as EventListener)
+      node.removeAttribute(name)
     } else {
       fallback()
     }
