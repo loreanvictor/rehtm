@@ -9,7 +9,10 @@ describe('object properties', () => {
 
   test('adds object properties to custom elements.', () => {
     const cb = jest.fn()
-    define('op-ext-test', () => {
+    const cb2 = jest.fn()
+
+    define('op-ext-test', ({test: t}) => {
+      cb2(t)
       onProperty('test', cb)
 
       return '<div></div>'
@@ -20,6 +23,8 @@ describe('object properties', () => {
     const el = fact.create('op-ext-test', { test: obj, id: 'foo' }, [], fact) as HTMLElement
     document.body.append(el)
 
+    expect(cb2).toBeCalledTimes(1)
+    expect(cb2).toBeCalledWith(obj)
     expect(cb).toBeCalledTimes(1)
     expect(cb).toBeCalledWith(obj)
     expect(el.id).toBe('foo')

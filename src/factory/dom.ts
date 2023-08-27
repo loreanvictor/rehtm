@@ -46,11 +46,16 @@ export const domFactoryExt: (document: Document) => DOMFactoryExt = (document) =
     }
   },
 
-  fill: (node, value, fallback) => {
+  fill: (node, value, fallback, self) => {
     if (value instanceof document.defaultView!.Node) {
       node.childNodes.forEach((child) => node.removeChild(child))
       node.appendChild(value)
-    } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+    } else if (Array.isArray(value)) {
+      node.childNodes.forEach((child) => node.removeChild(child))
+      for (const child of value) {
+        self.append(node, child, self)
+      }
+    }else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
       node.textContent = value.toString()
     } else {
       fallback()

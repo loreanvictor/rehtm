@@ -23,6 +23,14 @@ describe('factory', () => {
     expect(b.textContent).toBe('Hi Hi!')
   })
 
+  test('can fill DOM elements with arrays of stuff.', () => {
+    const factory = domFactory()
+    const b = document.createElement('b')
+    factory.fill(b, 'Hellow Hellow', factory)
+    factory.fill(b, ['hellow', 'world'], factory)
+    expect(b.textContent).toBe('hellowworld')
+  })
+
   test('throws error for unsupported tags.', () => {
     const factory = domFactory()
     expect(() => factory.create(42, {}, [], factory)).toThrowError()
@@ -41,7 +49,7 @@ describe('factory', () => {
   test('throws error for unsupported content to fill.', () => {
     const factory = domFactory()
     const b = document.createElement('b')
-    expect(() => factory.fill(b, [42], factory)).toThrowError()
+    expect(() => factory.fill(b, () => {}, factory)).toThrowError()
   })
 
   test('can be extended to support new tag types.', () => {
@@ -129,7 +137,7 @@ describe('factory', () => {
 
     const fact = extend(domFactory(), {
       fill(el, child, fallback) {
-        if (Array.isArray(child)) {
+        if (typeof child === 'function') {
           cb()
 
           return fallback(el, '42')
@@ -140,7 +148,7 @@ describe('factory', () => {
     })
 
     const b = document.createElement('b')
-    fact.fill(b, [41], fact)
+    fact.fill(b, () => {}, fact)
     expect(cb).toBeCalledTimes(1)
     expect(b.textContent).toBe('42')
   })

@@ -127,4 +127,17 @@ describe(build, () => {
     expect(div$).not.toBeNull()
     expect(div$!.textContent).toBe('halo World!')
   })
+
+  test('can embed arrays in elements.', () => {
+    const { html } = build(domFactory())
+
+    const c1 = html`<span>World</span>`
+    const c2 = html`<div>halo ${[c1, '!']}</div>`
+
+    document.body.appendChild(c2)
+
+    const div$ = document.querySelector('div')
+    expect(div$).not.toBeNull()
+    expect(div$!.textContent).toBe('halo World!')
+  })
 })
