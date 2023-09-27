@@ -1,6 +1,6 @@
 <div align="right">
 
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/rehtm@latest?color=black&label=&style=flat-square)](https://bundlephobia.com/package/rehtm@latest)
+[![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/rehtm?style=flat-square&label=%20&color=black)](https://bundlejs.com/?q=rehtm)
 [![npm](https://img.shields.io/npm/v/rehtm?color=black&label=&style=flat-square)](https://www.npmjs.com/package/rehtm)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/rehtm/coverage.yml?label=&style=flat-square)](https://github.com/loreanvictor/rehtm/actions/workflows/coverage.yml)
 
