@@ -197,7 +197,9 @@ tmpl.hydrateRoot(document.querySelector('#root'))
 
 <br>
 
-> 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM. This can be particularly tricky with the presence of text nodes that contain whitespace (e.g. newlines, tabs, etc.). To avoid this, make sure you are hydrating DOM that was created using the same template string with [**rehtm**](.).
+> **IMPORTANT**
+>
+>  [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM. This can be particularly tricky with the presence of text nodes that contain whitespace (e.g. newlines, tabs, etc.). To avoid this, make sure you are hydrating DOM that was created using the same template string with [**rehtm**](.).
 
 <br>
 
