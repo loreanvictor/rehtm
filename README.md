@@ -30,7 +30,7 @@ document.body.append(html`
 </div>
 
 - 🧬 [Hydration](https://en.wikipedia.org/wiki/Hydration_(web_development)) for pre-rendered content (e.g. SSR)
-- ⚡ Functions as Event Listeners
+- 🪝 Functions as Event Listeners
 - 🔗 Element references (instead of element IDs)
 - 📦 Object properties for [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
 - 🚀 Cached [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for performance
