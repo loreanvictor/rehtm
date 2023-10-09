@@ -134,7 +134,9 @@ document.body.append(html`
 
 <br>
 
-> 💡 [**re**htm](.) creates [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for any string literal and reuses them
+> **NOTE**
+> 
+> [**re**htm](.) creates [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for any string literal and reuses them
 > when possible. The following elements are all constructed from the same template:
 > ```js
 > html`<div class=${'foo'}>Hellow ${'World'}</div>`
