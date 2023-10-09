@@ -138,6 +138,7 @@ document.body.append(html`
 > 
 > [**re**htm](.) creates [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for any string literal and reuses them
 > when possible. The following elements are all constructed from the same template:
+> 
 > ```js
 > html`<div class=${'foo'}>Hellow ${'World'}</div>`
 > html`<div class=${'bar'}>Hellow ${'Welt'}</div>`
@@ -213,7 +214,9 @@ tmpl.create('Jack')
 
 <br>
 
-> 💡 `html` template tag also creates templates and uses `.create()` method to generate elements. It caches each template based on its string parts, and reloads the same template the next time it comes upon the same string bits.
+> **NOTE**
+>
+>  `html` template tag also creates templates and uses `.create()` method to generate elements. It caches each template based on its string parts, and reloads the same template the next time it comes upon the same string bits.
 
 <br>
 
