@@ -1,6 +1,6 @@
 <div align="right">
 
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/rehtm@latest?color=black&label=&style=flat-square)](https://bundlephobia.com/package/rehtm@latest)
+[![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/rehtm?style=flat-square&label=%20&color=black)](https://bundlejs.com/?q=rehtm)
 [![npm](https://img.shields.io/npm/v/rehtm?color=black&label=&style=flat-square)](https://www.npmjs.com/package/rehtm)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/loreanvictor/rehtm/coverage.yml?label=&style=flat-square)](https://github.com/loreanvictor/rehtm/actions/workflows/coverage.yml)
 
@@ -32,7 +32,7 @@ document.body.append(html`
 </div>
 
 - 🧬 [Hydration](https://en.wikipedia.org/wiki/Hydration_(web_development)) for pre-rendered content (e.g. SSR)
-- ⚡ Functions as Event Listeners
+- 🪝 Functions as Event Listeners
 - 🔗 Element references (instead of element IDs)
 - 📦 Object properties for [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
 - 🚀 Cached [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for performance
@@ -136,8 +136,11 @@ document.body.append(html`
 
 <br>
 
-> 💡 [**re**htm](.) creates [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for any string literal and reuses them
+> **NOTE**
+> 
+> [**re**htm](.) creates [HTML templates](https://www.w3schools.com/tags/tag_template.asp) for any string literal and reuses them
 > when possible. The following elements are all constructed from the same template:
+> 
 > ```js
 > html`<div class=${'foo'}>Hellow ${'World'}</div>`
 > html`<div class=${'bar'}>Hellow ${'Welt'}</div>`
@@ -197,7 +200,9 @@ tmpl.hydrateRoot(document.querySelector('#root'))
 
 <br>
 
-> 💡 [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM. This can be particularly tricky with the presence of text nodes that contain whitespace (e.g. newlines, tabs, etc.). To avoid this, make sure you are hydrating DOM that was created using the same template string with [**rehtm**](.).
+> **IMPORTANT**
+>
+>  [**re**htm](.) can hydrate DOM that is minorly different (for example, elements have different attributes). However it requires the same tree-structure to be able to hydrate pre-rendered DOM. This can be particularly tricky with the presence of text nodes that contain whitespace (e.g. newlines, tabs, etc.). To avoid this, make sure you are hydrating DOM that was created using the same template string with [**rehtm**](.).
 
 <br>
 
@@ -211,7 +216,9 @@ tmpl.create('Jack')
 
 <br>
 
-> 💡 `html` template tag also creates templates and uses `.create()` method to generate elements. It caches each template based on its string parts, and reloads the same template the next time it comes upon the same string bits.
+> **NOTE**
+>
+>  `html` template tag also creates templates and uses `.create()` method to generate elements. It caches each template based on its string parts, and reloads the same template the next time it comes upon the same string bits.
 
 <br>
 
