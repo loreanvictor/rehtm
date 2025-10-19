@@ -7,8 +7,10 @@ export class Recipe {
   slots: { [key: number]: Slot } = {}
   #closed = false
   readonly template: HTMLTemplateElement
+  readonly factory: DOMFactory
 
-  constructor(readonly factory: DOMFactory) {
+  constructor(factory: DOMFactory) {
+    this.factory = factory
     this.template = factory.document.createElement('template')
   }
 

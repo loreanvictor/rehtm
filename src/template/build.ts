@@ -2,13 +2,13 @@ import htm from 'htm/mini'
 
 import { extend, DOMFactory } from '../factory'
 import { Recipe } from './recipe'
-import { RecipeExt } from './extension'
+import { useRecipe } from './extension'
 import { makeSlottedParam } from './slot'
 
 
 export function build(factory: DOMFactory) {
   const ctx: Recipe[] = []
-  const fact = extend(factory, new RecipeExt(() => ctx[ctx.length - 1]!))
+  const fact = extend(factory, useRecipe(() => ctx[ctx.length - 1]!))
 
   const template = htm.bind(
     (type: unknown, props?: Record<string, unknown>, ...children: unknown[]) =>

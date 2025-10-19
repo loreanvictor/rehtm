@@ -23,10 +23,10 @@ describe('object properties', () => {
     const el = fact.create('op-ext-test', { test: obj, id: 'foo' }, [], fact) as HTMLElement
     document.body.append(el)
 
-    expect(cb2).toBeCalledTimes(1)
-    expect(cb2).toBeCalledWith(obj)
-    expect(cb).toBeCalledTimes(1)
-    expect(cb).toBeCalledWith(obj)
+    expect(cb2).toHaveBeenCalledTimes(1)
+    expect(cb2).toHaveBeenCalledWith(obj)
+    expect(cb).toHaveBeenCalledTimes(1)
+    expect(cb).toHaveBeenCalledWith(obj)
     expect(el.id).toBe('foo')
   })
 

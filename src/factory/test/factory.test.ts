@@ -33,23 +33,23 @@ describe('factory', () => {
 
   test('throws error for unsupported tags.', () => {
     const factory = domFactory()
-    expect(() => factory.create(42, {}, [], factory)).toThrowError()
+    expect(() => factory.create(42, {}, [], factory)).toThrow()
   })
 
   test('throws errors when setting unsupported attributes', () => {
     const factory = domFactory()
-    expect(() => factory.create('div', {x: [42]}, [], factory)).toThrowError()
+    expect(() => factory.create('div', {x: [42]}, [], factory)).toThrow()
   })
 
   test('throws error for unsupported childs.', () => {
     const factory = domFactory()
-    expect(() => factory.create('div', {}, [[42]], factory)).toThrowError()
+    expect(() => factory.create('div', {}, [[42]], factory)).toThrow()
   })
 
   test('throws error for unsupported content to fill.', () => {
     const factory = domFactory()
     const b = document.createElement('b')
-    expect(() => factory.fill(b, () => {}, factory)).toThrowError()
+    expect(() => factory.fill(b, () => {}, factory)).toThrow()
   })
 
   test('can be extended to support new tag types.', () => {
@@ -70,7 +70,7 @@ describe('factory', () => {
     document.body.append(fact.create(42, {}, [], fact))
     document.body.append(fact.create('div', {}, ['Halo'], fact))
 
-    expect(cb).toBeCalledTimes(1)
+    expect(cb).toHaveBeenCalledTimes(1)
     expect(document.body.innerHTML).toBe('<b></b><div>Halo</div>')
   })
 
@@ -108,7 +108,7 @@ describe('factory', () => {
     const div = fact.create('div', {}, [], fact) as HTMLElement
     fact.attribute(div, 'x', 42, fact)
     document.body.append(div)
-    expect(cb).toBeCalledTimes(1)
+    expect(cb).toHaveBeenCalledTimes(1)
     expect(document.body.innerHTML).toBe('<div y="42"></div>')
   })
 
@@ -128,7 +128,7 @@ describe('factory', () => {
     })
 
     document.body.append(fact.create('div', {}, [[41]], fact))
-    expect(cb).toBeCalledTimes(1)
+    expect(cb).toHaveBeenCalledTimes(1)
     expect(document.body.innerHTML).toBe('<div>42</div>')
   })
 
@@ -149,7 +149,7 @@ describe('factory', () => {
 
     const b = document.createElement('b')
     fact.fill(b, () => {}, fact)
-    expect(cb).toBeCalledTimes(1)
+    expect(cb).toHaveBeenCalledTimes(1)
     expect(b.textContent).toBe('42')
   })
 

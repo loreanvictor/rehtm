@@ -13,7 +13,7 @@ describe('functional event listeners', () => {
     document.body.append(el)
 
     el.click()
-    expect(cb).toBeCalledTimes(1)
+    expect(cb).toHaveBeenCalledTimes(1)
     expect(el.getAttribute('aria-label')).toBe('test')
   })
 })

@@ -1,8 +1,9 @@
 {
   "extends": "@sindresorhus/tsconfig",
   "compilerOptions": {
-		"moduleResolution": "node",
-		"module": "esnext",
+		"moduleResolution": "nodenext",
+    "isolatedModules": true,
+		"module": "nodenext",
     "jsx": "react",
 		"esModuleInterop": true,
 		"noImplicitAny": false

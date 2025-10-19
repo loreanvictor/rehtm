@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
 
 import { domFactory } from '../../factory'
@@ -80,6 +81,6 @@ describe('template', () => {
     const tmpl = template`<div>hello <b>${1}</b></div>`
 
     document.body.innerHTML = '<div>Hi</div>'
-    expect(() => tmpl.apply(document.body, 'world')).toThrowError(WrongAddressError)
+    expect(() => tmpl.apply(document.body, 'world')).toThrow(WrongAddressError)
   })
 })

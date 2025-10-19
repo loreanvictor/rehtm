@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 jest.mock('htm/mini', () => require('htm/mini/index.umd.js'))
 
 import {
@@ -9,7 +10,7 @@ import {
 
   functionalEventListenerExt, objectPropsExt, refExt,
 
-  cache, build, re,
+  cache, build, re, stdFactory,
 
 } from '../index'
 
@@ -39,6 +40,7 @@ test('everything is exported properly.', () => {
   expect(cache).not.toBe(undefined)
   expect(build).not.toBe(undefined)
   expect(re).not.toBe(undefined)
+  expect(stdFactory).not.toBe(undefined)
 })
 
 

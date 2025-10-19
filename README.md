@@ -9,6 +9,8 @@
 <img src="./logo-dark.svg#gh-dark-mode-only" height="42px"/>
 <img src="./logo-light.svg#gh-light-mode-only" height="42px"/>
 
+<br/>
+
 Create and hydrate [HTML](https://en.wikipedia.org/wiki/HTML) using [HTM](https://github.com/developit/htm):
 
 ```js
@@ -45,7 +47,7 @@ document.body.append(html`
 - [Usage](#usage)
   - [Hydration](#hydration)
   - [Global Document Object](#global-document-object)
-  - [Extension](#extension)
+  - [Extensions](#extension)
 - [Contribution](#contribution)
 
 <br>
@@ -230,9 +232,9 @@ document.body.append(html`<div>Hellow World!</div>`)
 
 <br>
 
-## Extension
+## Extensions
 
-You can create your own `html` and `template` tags with extended behavior. For that, you need a baseline DOM factory, extended with some extensions, passed to the `build()` function. For example, this is ([roughly](https://github.com/loreanvictor/rehtm/blob/412b87ad36f204491e56429291a339443dd978f5/src/index.ts#L12-L15)) how the default `html` and `template` tags are generated:
+You can extend the default behavior of [**rehtm**](.) by creating your own `html` and `template` tags with extended behavior. For that, you need to extend a baseline DOM factory, extended with some extensions, passed to the `build()` function. For example, this is ([roughly](https://github.com/loreanvictor/rehtm/blob/main/src/re.ts)) how the default `html` and `template` tags are created:
 
 ```js
 import {
@@ -263,24 +265,26 @@ const { html, template } = build(
 
 <br>
 
-An extension can extend any of these four core functionalities:
+An extension is an object with one or more of the following methods:
 
-- `create(type, props, children, fallback, self)` \
-  Is used when creating a new element. `children` is an already processed array of values. Should return the created node.
-  <br>
-  
-- `attribute(node, name, value, fallback, self)` \
-  Is used when setting an attribute on an element (a `create()` extension might bypass this).
-  <br>
+```ts
+interface DOMFactoryExt {
+  create?(type, propes, children, fallback, self) => Node
+  // 👆 called for creating a new element.
+  //    should return the element created
 
-- `append(node, value, fallback, self)` \
-  Is used when appending a child to a node (a `create()` extension might bypass this). Should return the appended node (or its analouge).
-  <br>
+  attribute?(node, name, value, fallback, self) => void
+  // 👆 called for setting an attribute on an element
 
-- `fill(node, value, fallback, self)` \
-  Is used when hydrating a node with some content.
-  <br>
-  
+  append?(node, value, fallback, self) => Node
+  // 👆 called for appending a child to an element.
+  //    should return the appended node (or its analouge)
+
+  fill?(node, value, fallback, self) => void
+  // 👆 called for hydrating a node with some content
+}
+```
+
 <br>
   
 👉  Each method is given a `fallback()`, which it can invoke to invoke prior extensions (or the original factory): 
@@ -299,7 +303,7 @@ const myExt = {
 }
 ```
 
-You can also call `fallback()` with modified arguments:
+You can also call `fallback()` with modified arguments. For convenience, arguments not provided will default to the original ones.
 
 ```js
 fallback(node, modify(name), value.prop)
@@ -329,6 +333,30 @@ const myExt = {
     }
   }
 }
+```
+
+<br>
+
+You should use some baseline DOM factory, extended with your extension, and potentially some other extensions, to create your own `html` and `template` tags. You can choose either of these following DOM factories for your baseline:
+
+Factory | Description
+--- | ---
+`stdFactory()` | a DOM factory with all the behaviour of [**rehtm**](.) such as functional event listeners, object properties and references.
+`domFactory()` | a bare-bones DOM factory with no extra behaviour. Use this if you don't want the additional behaviours provided by the default `html` and `template` tags.
+`nullFactory()` | a DOM factory that does nothing. Use this if you want to customise everything including how default elements are created.
+
+Each of these factory functions accepts a `Document` object, defaulting to the global `document` object. This is useful for when you (or a user of your extensions) wants to use some other document object (for example, during server side rendering).
+
+Use the `extend()` function to create an extended factory:
+
+```js
+const myFactory = extend(stdFactory(), myExtension1, myExtension2, ...)
+```
+
+Use the `build()` function to create `html` and `template` tags from your extended factory:
+
+```js
+const { html, template } = build(myFactory)
 ```
 
 <br>
