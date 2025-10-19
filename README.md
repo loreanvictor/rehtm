@@ -47,7 +47,7 @@ document.body.append(html`
 - [Usage](#usage)
   - [Hydration](#hydration)
   - [Global Document Object](#global-document-object)
-  - [Extensions](#extension)
+  - [Extensions](#extensions)
 - [Contribution](#contribution)
 
 <br>
